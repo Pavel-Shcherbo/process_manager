@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="mb-4">Новый документ</h1>
+<form method="post" enctype="multipart/form-data" class="card p-4 shadow" style="max-width:600px">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button class="btn btn-success">Сохранить</button>
+</form>
+{% endblock %}

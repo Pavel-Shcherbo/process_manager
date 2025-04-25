@@ -1,0 +1,19 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<h1>Процессы</h1>
+<table class="table table-bordered">
+  <thead><tr><th>#</th><th>Филиал</th><th>Название</th><th>Уровень</th><th></th></tr></thead>
+  <tbody>
+    {% for p in processes %}
+      <tr>
+        <td>{{ p.id }}</td>
+        <td>{{ p.branch }}</td>
+        <td>{{ p.name }}</td>
+        <td>{{ p.level }}</td>
+        <td><a class="btn btn-sm btn-outline-primary" href="{% url 'processes:detail' p.pk %}">Детали</a></td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

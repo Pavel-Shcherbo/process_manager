@@ -1,0 +1,21 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<h1>Документы</h1>
+<h1 class="mb-3">Документы
+  {% if user.role in 'ADMIN SUPERADMIN' %}
+    <a href="{% url 'documents:add' %}" class="btn btn-primary btn-sm ms-3">＋ Загрузить</a>
+  {% endif %}
+</h1>
+<table class="table table-hover">
+  <thead><tr><th>#</th><th>Номер</th><th>Название</th><th>Тип</th><th>Процесс</th><th></th></tr></thead>
+  <tbody>
+    {% for d in documents %}
+      <tr>
+        <td>{{ d.id }}</td><td>{{ d.number }}</td><td>{{ d.title }}</td><td>{{ d.get_doc_type_display }}</td><td>{{ d.process.name }}</td>
+        <td><a class="btn btn-sm btn-outline-secondary" href="{% url 'documents:detail' d.pk %}">Просмотр</a></td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

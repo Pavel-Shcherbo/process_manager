@@ -1,0 +1,11 @@
+
+<li class="list-group-item">
+  {{ node.process.name }}
+  {% if node.children %}
+    <ul class="list-group ms-4 mt-2">
+      {% for ch in node.children %}
+        {% include 'processes/_tree.html' with node=ch %}
+      {% endfor %}
+    </ul>
+  {% endif %}
+</li>

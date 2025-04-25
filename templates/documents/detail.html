@@ -1,0 +1,26 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<h1>{{ doc.title }}</h1>
+<p>Номер: {{ doc.number }} | Тип: {{ doc.get_doc_type_display }} | Дата: {{ doc.signed_at }}</p>
+{% if mime and mime.startswith('image') %}
+  <img src="{{ doc.file.url }}" class="img-fluid" />
+{% elif mime == 'application/pdf' %}
+  <iframe src="{{ doc.file.url }}" style="width:100%; min-height:600px;"></iframe>
+{% else %}
+  <a class="btn btn-primary" href="{{ doc.file.url }}">Скачать</a>
+{% endif %}
+{% endblock %}
+{% if mime and mime.startswith('image') %}
+  <div class="text-end">
+    <button class="btn btn-sm btn-outline-secondary me-1" id="zoomIn">＋</button>
+    <button class="btn btn-sm btn-outline-secondary me-1" id="zoomOut">－</button>
+    <a class="btn btn-sm btn-primary" href="{{ doc.file.url }}" download>Скачать</a>
+  </div>
+  <img src="{{ doc.file.url }}" class="img-fluid mt-2" id="previewImg">
+{% elif mime == 'application/pdf' %}
+  <iframe src="{{ doc.file.url }}#toolbar=0" style="width:100%;min-height:600px;"></iframe>
+  <a class="btn btn-primary mt-3" href="{{ doc.file.url }}" download>Скачать</a>
+{% else %}
+  <a class="btn btn-primary" href="{{ doc.file.url }}" download>Скачать файл</a>
+{% endif %}

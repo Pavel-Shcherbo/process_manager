@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="mb-4">Дашборд</h1>
+<div class="row g-4">
+  {% for kpi in kpis %}
+    <div class="col-md-3">
+      <div class="card text-bg-{{ kpi.color }} shadow rounded-4">
+        <div class="card-body text-center">
+          <h2 class="display-6">{{ kpi.value }}</h2>
+          <p class="card-text">{{ kpi.label }}</p>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+<h3 class="mt-5">Документы на процесс</h3>
+<canvas id="docsChart" height="80"></canvas>
+
+<a href="{% url 'core:generate_report' %}"
+   class="btn btn-outline-primary mt-4">⬇ Excel-отчёт</a>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+fetch("{% url 'core:analytics_data' %}")
+  .then(r => r.json())
+  .then(d => {
+    new Chart(document.getElementById('docsChart'), {
+      type: 'bar',
+      data: {labels:d.labels,datasets:[{label:'Документы',data:d.data}]},
+      options:{plugins:{legend:{display:false}}}
+    });
+  });
+</script>
+{% endblock %}

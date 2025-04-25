@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="mb-3">{{ tree.process.name }}</h1>
+<ul class="list-group">
+  {% include 'processes/_tree.html' with node=tree %}
+</ul>
+{% endblock %}

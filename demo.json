@@ -1,0 +1,63 @@
+[
+  {
+    "model": "companies.company",
+    "pk": 1,
+    "fields": {
+      "name": "Acme Corp",
+      "short_name": "ACME",
+      "road": "Main road"
+    }
+  },
+  {
+    "model": "branches.branch",
+    "pk": 1,
+    "fields": {
+      "company": 1,
+      "name": "Headquarters",
+      "description": ""
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$260000$hash$hash",
+      "last_login": null,
+      "is_superuser": true,
+      "username": "super",
+      "email": "",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2025-01-01T00:00:00Z",
+      "role": "SUPERADMIN",
+      "branch": 1,
+      "full_name": "Super User"
+    }
+  },
+  {
+    "model": "processes.process",
+    "pk": 1,
+    "fields": {
+      "branch": 1,
+      "name": "Main Process",
+      "level": 0
+    }
+  },
+  {
+    "model": "processes.process",
+    "pk": 2,
+    "fields": {
+      "branch": 1,
+      "name": "Sub Process A",
+      "level": 1
+    }
+  },
+  {
+    "model": "processes.processrelation",
+    "pk": 1,
+    "fields": {
+      "process": 1,
+      "sub_process": 2
+    }
+  }
+]
