@@ -1,10 +1,18 @@
-{% extends 'base.html' %}
-{% block extra_js %}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/themes/default/style.min.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/jstree.min.js"></script>
-<script src="{% static 'js/process_tree.js' %}"></script>
-{% endblock %}
-{% block content %}
-<h1>Дерево процессов</h1>
-<div id="process-tree"></div>
-{% endblock %}
+{% raw %} {% extends 'base.html' %} {% block title %}Дерево процессов{% endblock
+%} {% block content %} // Submit comment via AJAX
+document.getElementById('comment-form').addEventListener('submit', ev=>{
+ev.preventDefault(); const id = $('#process-tree').jstree('get_selected')[0];
+const text = ev.target.text.value; fetch(/api/processes/${id}/comments/,{
+method:'POST',headers:{'Content-Type':'application/json','X-CSRFToken':getCSRF()},
+body: JSON.stringify({ text }) }).then(()=> loadComments(id)); }); function
+loadComments(procId) {
+fetch(/api/processes/${procId}/comments/).then(r=>r.json()).then(list=>{ const
+cDiv = document.getElementById('comments'); cDiv.innerHTML = '';
+list.forEach(c=>{ const el = document.createElement('div');
+el.className='comment'; el.innerHTML =
+<p class="author">${c.author}</p>
+<p class="timestamp">${c.created_at}</p>
+<p>${c.text}</p>
+; cDiv.append(el); }); }); } function getCSRF() { return
+document.cookie.split('; ').find(row =>
+row.startsWith('csrftoken')).split('=')[1]; } }); {% endblock %} {% endraw %}

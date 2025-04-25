@@ -1,128 +1,146 @@
-/* ----- Общие переменные (light) ----- */
+/* File: static/css/style.css /
+/ -------------------------------------------------- /
+/          Process Manager — New Modern Style        /
+/ -------------------------------------------------- */
+
 :root {
-  --pm-primary: #2563eb; /* indigo-600 */
-  --pm-primary-dark: #1e40af;
-  --pm-bg: #f8fafc; /* slate-50  */
-  --pm-bg-card: #ffffff;
-  --pm-text: #0f172a; /* slate-900 */
-  --pm-muted: #64748b; /* slate-500 */
-  --pm-border: #e2e8f0;
-  --pm-radius: 1rem;
-  --pm-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
-  --pm-gap: 1.25rem;
-  --pm-trans: 0.25s ease;
+  --pm-primary: #4f46e5;
+  --pm-primary-light: #6366f1;
+  --pm-bg: #f9fafb;
+  --pm-bg-alt: #ffffff;
+  --pm-text: #111827;
+  --pm-muted: #6b7280;
+  --pm-border: #e5e7eb;
+  --pm-radius: 0.5rem;
+  --pm-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --pm-gap: 1rem;
+  --pm-transition: 0.3s ease;
 }
 
-/* ----- Dark-mode (если нужен позже) ----- */
-[data-theme="dark"] {
-  --pm-primary: #3b82f6;
-  --pm-primary-dark: #1e40af;
-  --pm-bg: #0f172a;
-  --pm-bg-card: #1e293b;
-  --pm-text: #f1f5f9;
-  --pm-muted: #94a3b8;
-  --pm-border: #334155;
-  --pm-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
-}
-
-/* ----- Базовая типографика ----- */
 body {
-  font-family: "Inter", system-ui, sans-serif;
-  color: var(--pm-text);
+  font-family: "Inter", sans-serif;
   background: var(--pm-bg);
-  line-height: 1.6;
-  transition: background var(--pm-trans), color var(--pm-trans);
+  color: var(--pm-text);
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-h1,
-h2,
-h3,
-h4 {
-  font-weight: 600;
-  letter-spacing: -0.02em;
+/* Three-panel layout container */
+#three-panel-container {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
 }
 
-/* ----- Навбар ----- */
-.navbar {
-  background: var(--pm-primary);
-}
-.navbar-brand {
-  font-weight: 600;
-}
-.navbar .nav-link.active,
-.navbar .nav-link:hover {
-  color: #fff !important;
-  opacity: 0.9;
-}
-
-/* ----- Сайдбар ----- */
-#sidebar {
-  background: var(--pm-bg-card);
+/* Left navigation panel */
+#panel-nav {
+  width: 250px;
+  background: var(--pm-bg-alt);
   border-right: 1px solid var(--pm-border);
-  transition: width var(--pm-trans);
-}
-#sidebar.collapsed {
-  width: 4rem;
+  overflow-y: auto;
+  padding: var(--pm-gap);
 }
 
-/* ----- Карточки KPI ----- */
-.card {
-  border: none;
+/* Main content (document viewer) */
+#panel-main {
+  flex: 1;
+  padding: var(--pm-gap);
+  overflow-y: auto;
+  background: var(--pm-bg-alt);
+}
+#doc-viewer {
+  width: 100%;
+  height: calc(100% - 2rem);
+  border: 1px solid var(--pm-border);
   border-radius: var(--pm-radius);
   box-shadow: var(--pm-shadow);
-  transition: transform var(--pm-trans), box-shadow var(--pm-trans);
-}
-.card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-}
-.card .display-6 {
-  font-size: 2rem;
+  overflow: hidden;
 }
 
-/* ----- Кнопки ----- */
-.btn-primary {
-  background: var(--pm-primary);
-  border-color: var(--pm-primary-dark);
-}
-.btn-primary:hover {
-  background: var(--pm-primary-dark);
-  border-color: var(--pm-primary-dark);
-}
-
-/* ----- Таблицы ----- */
-.table {
-  --bs-table-hover-bg: rgba(37, 99, 235, 0.05); /* лёгкий blue-hover */
-}
-.table thead th {
-  border-bottom: 2px solid var(--pm-border);
-}
-.table tbody tr:hover {
-  transition: background var(--pm-trans);
+/* Right info panel */
+#panel-info {
+  width: 300px;
+  background: var(--pm-bg-alt);
+  border-left: 1px solid var(--pm-border);
+  overflow-y: auto;
+  padding: var(--pm-gap);
 }
 
-/* ----- Процесс-дерево ----- */
-.list-group-item {
-  border: none;
-  padding-left: 0.75rem;
+/* Process info header */
+#process-info h2 {
+  margin-top: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
 }
-.list-group-item::before {
-  content: "•";
-  color: var(--pm-primary);
-  margin-right: 0.5rem;
+#process-info p {
+  margin-bottom: var(--pm-gap);
 }
 
-/* ----- Прелоады / мелочи ----- */
-.spinner-border {
+/* Comments list */
+#comments {
+  margin-top: var(--pm-gap);
+}
+.comment {
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--pm-border);
+}
+.comment:last-child {
+  border-bottom: none;
+}
+.comment .author {
+  font-weight: 500;
   color: var(--pm-primary);
 }
-
-/* … (вся прежняя таблица) … */
-#previewImg {
-  transition: transform 0.25s ease;
-  transform-origin: top left;
+.comment .timestamp {
+  font-size: 0.75rem;
+  color: var(--pm-muted);
 }
-/* Градиент для body */
-body {
-  background: linear-gradient(180deg, var(--pm-bg) 0%, #e2e8f0 100%);
+
+/* Comment form */
+#comment-form textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 0.5rem;
+  border: 1px solid var(--pm-border);
+  border-radius: var(--pm-radius);
+  resize: vertical;
+}
+#comment-form button {
+  margin-top: 0.5rem;
+}
+
+/* jsTree overrides */
+.jstree-default .jstree-anchor {
+  padding: 0.3rem 0.5rem;
+  border-radius: var(--pm-radius);
+  transition: background var(--pm-transition);
+}
+.jstree-default .jstree-node:hover > .jstree-anchor {
+  background: var(--pm-primary-light);
+  color: #fff;
+}
+
+/* Scrollbar styling */
+#panel-nav::-webkit-scrollbar,
+#panel-main::-webkit-scrollbar,
+#panel-info::-webkit-scrollbar {
+  width: 8px;
+}
+#panel-nav::-webkit-scrollbar-thumb,
+#panel-main::-webkit-scrollbar-thumb,
+#panel-info::-webkit-scrollbar-thumb {
+  background: var(--pm-border);
+  border-radius: 4px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  #panel-nav {
+    display: none;
+  }
+  #panel-info {
+    display: none;
+  }
 }
