@@ -1,5 +1,5 @@
-
 from django.contrib import admin
+from apps.core.mixins import CompanyScopedAdminMixin
 from .models import Process, ProcessRelation
 
 class ProcessRelationInline(admin.TabularInline):
@@ -8,8 +8,8 @@ class ProcessRelationInline(admin.TabularInline):
     extra = 1
 
 @admin.register(Process)
-class ProcessAdmin(admin.ModelAdmin):
-    list_display = ('id', 'branch', 'name', 'level')
+class ProcessAdmin(admin.ModelAdmin, CompanyScopedAdminMixin):
+    list_display = ('id', 'branch', 'name', 'level', 'responsible')
     list_filter = ('branch',)
-    search_fields = ('name',)
     inlines = [ProcessRelationInline]
+    search_fields = ('name',)

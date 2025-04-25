@@ -1,23 +1,28 @@
-
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 from .models import Process, ProcessRelation
-from types import SimpleNamespace
+import json
 
+@login_required
+def process_tree_page(request):
+    # Fetch all processes for user's scope
+    if request.user.is_superuser:
+        qs = Process.objects.all()
+    elif request.user.role == 'ADMIN':
+        qs = Process.objects.filter(branch=request.user.branch.company.processes__branch__company=request.user.branch.company)
+    else:
+        qs = Process.objects.filter(branch=request.user.branch)
 
-def process_list(request):
-    processes = Process.objects.select_related('branch').all()
-    return render(request, 'processes/list.html', {'processes': processes})
+    # Build nodes for jsTree
+    nodes = []
+    for p in qs:
+        parent_ids = [rel.process_id for rel in ProcessRelation.objects.filter(sub_process=p)]
+        nodes.append({
+            'id': p.id,
+            'parent': parent_ids[0] if parent_ids else '#',
+            'text': p.name
+        })
 
-def build_tree(node):
-    return SimpleNamespace(
-        process=node,
-        children=[
-            build_tree(rel.sub_process)
-            for rel in node.children_rel.select_related('sub_process')
-        ]
-    )
-
-def process_detail(request, pk):
-    process = get_object_or_404(Process, pk=pk)
-    tree = build_tree(process)
-    return render(request, 'processes/detail.html', {'tree': tree})
+    return render(request, 'processes/tree.html', {
+        'tree_data': json.dumps(nodes)
+    })

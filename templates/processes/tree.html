@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block extra_js %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/themes/default/style.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/jstree.min.js"></script>
+<script src="{% static 'js/process_tree.js' %}"></script>
+{% endblock %}
+{% block content %}
+<h1>Дерево процессов</h1>
+<div id="process-tree"></div>
+{% endblock %}
